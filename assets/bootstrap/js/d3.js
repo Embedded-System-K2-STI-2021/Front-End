@@ -53,7 +53,7 @@ function bpm(email) {
 
     //Read the data
     // When reading the csv, I must format variables:
-    d3.csv("https://backend-embedded-system.herokuapp.com/csv/{email}",
+    d3.csv("https://backend-embedded-system.herokuapp.com/csv/${email}",
       
     function(d){
       return { date : d3.timeParse("%Y-%m-%d %H:%M:%S")(d.date), value : d.bpm }
@@ -178,7 +178,7 @@ function spo2(email) {
 
     //Read the data
     // When reading the csv, I must format variables:
-    d3.csv("https://backend-embedded-system.herokuapp.com/csv/{email}",
+    d3.csv("https://backend-embedded-system.herokuapp.com/csv/${email}",
       
     function(d){
       return { date : d3.timeParse("%Y-%m-%d %H:%M:%S")(d.date), value : d.spo2 }
