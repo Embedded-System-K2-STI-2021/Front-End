@@ -195,7 +195,7 @@
                                                         <div class="form-group"><input class="form-control" type="email" id="email" placeholder="medic@example.com" name="email"></div>
                                                     </div>
                                                 </div>
-                                                <div class="form-group text-right"><button class="btn btn-primary btn-sm" type="submit">Grant Permission</button></div>
+                                                <div class="form-group text-right"><button class="btn btn-primary btn-sm" type="button" onclick="addMedical()">Grant Permission</button></div>
                                             </form>
                                         </div>
                                     </div>
@@ -349,6 +349,35 @@
             </footer>
         </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
     </div>
+    <script>
+        function addMedical(){
+            var email = document.getElementById('email');
+            var data = JSON.stringify(
+                {
+                    'email' : email.value,
+                    'password' : password.value,
+                }
+            );
+            var url = "https://pantau-19.netlify.app/user-dashboard"
+
+            fetch(url,{
+                method : "POST",
+                headers : {
+                    'Accept' : 'application/json',
+                    'Content-type' : 'application/json',
+                },
+                body = data,
+            }).then(function(response){
+                if(response.status==200)
+                {
+                    alert('Penambahan medical officer berhasil, dengan email ' + email.value);
+                    return response.json();
+                } else {
+                    alert('Penambahan Medical Officer Gagal! Pastikan email sudah terisi')
+                }
+            }).then(information => alert("Selamat datang"))
+        }
+    </script>
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/bootstrap/js/d3.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
