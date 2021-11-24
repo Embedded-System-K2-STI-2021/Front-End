@@ -35,11 +35,8 @@
                                             <div class="custom-control custom-checkbox small">
                                                 <div class="form-check"><input class="form-check-input custom-control-input" type="checkbox" id="formCheck-1"><label class="form-check-label custom-control-label" for="formCheck-1">Remember Me</label></div>
                                             </div>
-                                        </div><button class="btn btn-primary btn-block text-white btn-user" type="submit">Login</button>
-                                        <hr><a class="btn btn-primary btn-block text-white btn-google btn-user" role="button"><i class="fab fa-google"></i>&nbsp; Login with Google</a><a class="btn btn-primary btn-block text-white btn-facebook btn-user" role="button"><i class="fab fa-facebook-f"></i>&nbsp; Login with Facebook</a>
-                                        <hr>
+                                        </div><button class="btn btn-primary btn-block text-white btn-user" type="button" onclick="doLogin()">Login</button>
                                     </form>
-                                    <div class="text-center"><a class="small" href="forgot-password.html">Forgot Password?</a></div>
                                     <div class="text-center"><a class="small" href="register.html">Create an Account!</a></div>
                                 </div>
                             </div>
@@ -49,6 +46,36 @@
             </div>
         </div>
     </div>
+    <script>
+        function doLogin(){
+            var email = document.getElementById('email');
+            var password = document.getElementById('password');
+            var data = JSON.stringify(
+                {
+                    'email' : email.value,
+                    'password' : password.value,
+                }
+            );
+            var url = "https://pantau-19.netlify.app/login"
+
+            fetch(url,{
+                method : "POST",
+                headers : {
+                    'Accept' : 'application/json',
+                    'Content-type' : 'application/json',
+                },
+                body = data,
+            }).then(function(response){
+                if(response.status==200)
+                {
+                    alert('Login berhasil, dengan email ' + email.value);
+                    return response.json();
+                } else {
+                    alert('Login Gagal! Pastikan email dan password yang dimasukkan benar dan telah terdaftar')
+                }
+            }).then(information => alert("Selamat datang"))
+        }
+    </script>
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/chart.min.js"></script>
