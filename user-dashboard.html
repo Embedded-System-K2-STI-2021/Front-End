@@ -129,6 +129,7 @@
                     </div>
                 </nav>
                 <div class="container-fluid">
+                    <h3 class="text-dark mb-4">User Dashboard</h3>
                     <h3 id="user-dashboard" class="text-dark mb-4"></h3>
                     <div class="row mb-3">
                         <div class="col">
@@ -257,12 +258,7 @@
                                                             <th>Avg Pulse Rate (BPM)</th>
                                                         </tr>
                                                     </thead>
-                                                    <tbody id="tabel-body">
-                                                        <tr>
-                                                            <td>2021-04-25 17:03:25<br></td>
-                                                            <td class="oxistatus">93</td>
-                                                            <td class="hrstatus">78</td>
-                                                        </tr>
+                                                    <tbody id="table-body">
                                                     </tbody>
                                                     <tfoot>
                                                         <tr>
@@ -341,12 +337,23 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
     <script src="assets/js/theme.js"></script>
     <script>
-        $.get("https://backend-embedded-system.herokuapp.com/data/rahmat.wibowo21@gmail.com", function(data, status){
+        const search = new URLSearchParams(window.location.search);
+        const email = search.get('email')
+
+        $.get("https://backend-embedded-system.herokuapp.com/data/"+email, function(data, status){
             for (let i = 0; i < data.data.sensorData.length; i++) {
-                $("#reading-time").innerText = data.data.sensorData[i].date;
-                $("#spo2").innerText = data.data.sensorData[i].spo2;
-                $("#bpm").innerText = data.data.sensorData[i].bpm;
+                const date = $("<td></td>").text(data.data.sensorData[i].date)
+                const spo2 = $("<td></td>").text(data.data.sensorData[i].spo2);
+                const bpm = $("<td></td>").text(data.data.sensorData[i].bpm);
+                const record = $("<tr></tr>").append(date, spo2, bpm)
+                $("#table-body").append(record)
+                
+                // $("#reading-time").innerText = data.data.sensorData[i].date;
+                // $("#spo2").innerText = data.data.sensorData[i].spo2;
+                // $("#bpm").innerText = data.data.sensorData[i].bpm;
             }
+
+            $("#user-dashboard").innerText = data.data.name;
         })
     </script>
 </body>

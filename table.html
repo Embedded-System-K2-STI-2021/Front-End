@@ -161,16 +161,20 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <a href="user-dashboard.html?email=rahmat.wibowo21@gmail.com">
                                         <tr>
-                                            <td>rahmat.wibowo21@gmail.com</td>
+                                            
+                                            <td>
+                                                <a href="user-dashboard.html?email=rahmat.wibowo21@gmail.com">
+                                                rahmat.wibowo21@gmail.com
+                                                </a>
+                                            </td>
+                                            
                                             <td>Rahmat Wibowo</td>
                                             <td>21</td>
                                             <td id="reading-time"><br></td>
                                             <td id="spo2" class="oxistatus"></td>
                                             <td id="bpm" class="hrstatus"></td>
                                         </tr>
-                                        </a>
                                     </tbody>
                                     <tfoot>
                                         <tr>
@@ -219,9 +223,9 @@
     <script src="assets/js/theme.js"></script>
     <script>
         $.get("https://backend-embedded-system.herokuapp.com/data/rahmat.wibowo21@gmail.com", function(data, status){
-            $("#reading-time").innerText = data.data.sensorData[9].date;
-            $("#spo2").innerText = data.data.sensorData[9].spo2;
-            $("#bpm").innerText = data.data.sensorData[9].bpm;
+            $("#reading-time").innerText = data.data.sensorData[data.data.sensorData.length - 1].date;
+            $("#spo2").innerText = data.data.sensorData[data.data.sensorData.length - 1].spo2;
+            $("#bpm").innerText = data.data.sensorData[data.data.sensorData.length - 1].bpm;
         }
 )
     </script>
