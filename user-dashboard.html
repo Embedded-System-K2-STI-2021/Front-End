@@ -338,11 +338,11 @@
     <script src="assets/js/theme.js"></script>
     <script>
         const search = new URLSearchParams(window.location.search);
-        const email = search.get('email')
+        const email_param = search.get('email')
 
-        $.get("https://backend-embedded-system.herokuapp.com/data/"+email, function(data, status){
+        $.get("https://backend-embedded-system.herokuapp.com/data/"+email_param, function(data, status){
             for (let i = 0; i < data.data.sensorData.length; i++) {
-                const date = $("<td></td>").text(data.data.sensorData[i].date)
+                const date = $("<td></td>").text(new Date(data.data.sensorData[data.data.sensorData.length - 1].date).toLocaleString())
                 const spo2 = $("<td></td>").text(data.data.sensorData[i].spo2);
                 const bpm = $("<td></td>").text(data.data.sensorData[i].bpm);
                 const record = $("<tr></tr>").append(date, spo2, bpm)
@@ -353,7 +353,7 @@
                 // $("#bpm").innerText = data.data.sensorData[i].bpm;
             }
 
-            $("#user-dashboard").innerText = data.data.name;
+            $("#user-dashboard").text(data.data.name);
         })
     </script>
 </body>
