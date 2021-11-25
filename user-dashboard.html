@@ -355,10 +355,9 @@
             var data = JSON.stringify(
                 {
                     'email' : email.value,
-                    'password' : password.value,
                 }
             );
-            var url = "https://pantau-19.netlify.app/user-dashboard"
+            var url = "https://backend-embedded-system.herokuapp.com/observers"
 
             fetch(url,{
                 method : "POST",
