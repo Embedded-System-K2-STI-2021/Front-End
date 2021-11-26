@@ -28,18 +28,15 @@
                                     <div class="text-center">
                                         <h4 class="text-dark mb-4">Welcome Back!</h4>
                                     </div>
-                                    <form class="user">
+                                    <form class="user" id="user">
                                         <div class="form-group"><input class="form-control form-control-user" type="email" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address..." name="email"></div>
                                         <div class="form-group"><input class="form-control form-control-user" type="password" id="exampleInputPassword" placeholder="Password" name="password"></div>
                                         <div class="form-group">
                                             <div class="custom-control custom-checkbox small">
                                                 <div class="form-check"><input class="form-check-input custom-control-input" type="checkbox" id="formCheck-1"><label class="form-check-label custom-control-label" for="formCheck-1">Remember Me</label></div>
                                             </div>
-                                        </div><button class="btn btn-primary btn-block text-white btn-user" type="submit">Login</button>
-                                        <hr><a class="btn btn-primary btn-block text-white btn-google btn-user" role="button"><i class="fab fa-google"></i>&nbsp; Login with Google</a><a class="btn btn-primary btn-block text-white btn-facebook btn-user" role="button"><i class="fab fa-facebook-f"></i>&nbsp; Login with Facebook</a>
-                                        <hr>
+                                        </div><button class="btn btn-primary btn-block text-white btn-user" type="submit" value="submit">Login</button>
                                     </form>
-                                    <div class="text-center"><a class="small" href="forgot-password.html">Forgot Password?</a></div>
                                     <div class="text-center"><a class="small" href="register.html">Create an Account!</a></div>
                                 </div>
                             </div>
@@ -49,6 +46,34 @@
             </div>
         </div>
     </div>
+    <script>
+        var form_el = document.getElementById("user");
+        form_el.addEventListener("submit", function(e) {
+            var email = document.getElementById("exampleInputEmail");
+            var password = document.getElementById("exampleInputPassword");
+            e.preventDefault();
+            data={"email":email.value,"password":password.value}
+            
+            fetch("https://backend-embedded-system.herokuapp.com/login",
+                {
+                    body: JSON.stringify(data),
+                    method: "post",
+                    headers: {
+                     'Content-Type': 'application/json'
+                   }
+                
+                
+            }).then((response) => {
+                if(response.status == 200){
+                    alert("You are logged in.");
+                    window.location ="index.html"
+                   } else {
+                       alert("Please check your login information.");
+                   }
+            })
+        })
+      </script>
+    </script>
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/chart.min.js"></script>
