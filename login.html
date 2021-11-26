@@ -28,14 +28,14 @@
                                     <div class="text-center">
                                         <h4 class="text-dark mb-4">Welcome Back!</h4>
                                     </div>
-                                    <form class="user">
+                                    <form class="user" id="user">
                                         <div class="form-group"><input class="form-control form-control-user" type="email" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address..." name="email"></div>
                                         <div class="form-group"><input class="form-control form-control-user" type="password" id="exampleInputPassword" placeholder="Password" name="password"></div>
                                         <div class="form-group">
                                             <div class="custom-control custom-checkbox small">
                                                 <div class="form-check"><input class="form-check-input custom-control-input" type="checkbox" id="formCheck-1"><label class="form-check-label custom-control-label" for="formCheck-1">Remember Me</label></div>
                                             </div>
-                                        </div><button class="btn btn-primary btn-block text-white btn-user" type="submit" value="submit" onclick="doLogin()">Login</button>
+                                        </div><button class="btn btn-primary btn-block text-white btn-user" type="submit" value="submit">Login</button>
                                     </form>
                                     <div class="text-center"><a class="small" href="register.html">Create an Account!</a></div>
                                 </div>
@@ -47,34 +47,35 @@
         </div>
     </div>
     <script>
-        function doLogin(){
-            var email = document.getElementById('email');
-            var password = document.getElementById('password');
-            var data = JSON.stringify(
+        var form_el = document.getElementById("user");
+        form_el.addEventListener("submit", function(e) {
+            var email = document.getElementById("exampleInputEmail");
+            var password = document.getElementById("exampleInputPassword");
+            e.preventDefault();
+            console.log(email.value)
+            console.log(password.value)
+            data={"email":email.value,"password":password.value}
+            
+            fetch("https://backend-embedded-system.herokuapp.com/login",
                 {
-                    'email' : email.value,
-                    'password' : password.value,
-                }
-            );
-            var url = "https://backend-embedded-system.herokuapp.com/login"
-
-            fetch(url,{
-                method : "POST",
-                headers : {
-                    'Accept' : 'application/json',
-                    'Content-type' : 'application/json',
-                },
-                body = data,
-            }).then(function(response){
-                if(response.status==200)
-                {
-                    alert('Login berhasil, dengan email ' + email.value);
-                    return response.json();
-                } else {
-                    alert('Login Gagal! Pastikan email dan password yang dimasukkan benar dan telah terdaftar')
-                }
-            }).then(information => alert("Selamat datang"))
-        }
+                    body: JSON.stringify(data),
+                    method: "post",
+                    headers: {
+                     'Content-Type': 'application/json'
+                   }
+                
+                
+            }).then((response) => response.json())
+            .then((result) => {
+                if(result){
+                    alert("You are logged in.");
+                    window.location ="profile.html"
+                   } else {
+                       alert("Please check your login information.");
+                   }
+            })
+        })
+      </script>
     </script>
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
