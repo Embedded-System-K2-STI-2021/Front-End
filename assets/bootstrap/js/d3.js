@@ -1,5 +1,8 @@
 // select which data to show
 // 1: bpm, 2: spo2
+window.localStorage.setItem("email", "rahmat.wibowo21@gmail.com")
+let email = window.localStorage.getItem("email")
+
 bpm()
 
 function selectGraph() {
@@ -31,7 +34,7 @@ function removeFirst() {
   }
 }
 
-function bpm() {
+function bpm(email) {
   // set the dimensions and margins of the graph
   var margin = {top: 30, right: 30, bottom: 30, left: 60},
       width = 420 - margin.left - margin.right,
@@ -50,7 +53,7 @@ function bpm() {
 
     //Read the data
     // When reading the csv, I must format variables:
-    d3.csv("https://backend-embedded-system.herokuapp.com/csv/123@mail.com",
+    d3.csv(`https://backend-embedded-system.herokuapp.com/csv/${email}`,
       
     function(d){
       return { date : d3.timeParse("%Y-%m-%d %H:%M:%S")(d.date), value : d.bpm }
@@ -156,7 +159,7 @@ function bpm() {
   })
 }
 
-function spo2() {
+function spo2(email) {
   // set the dimensions and margins of the graph
   var margin = {top: 30, right: 30, bottom: 30, left: 60},
       width = 420 - margin.left - margin.right,
@@ -175,7 +178,7 @@ function spo2() {
 
     //Read the data
     // When reading the csv, I must format variables:
-    d3.csv("https://backend-embedded-system.herokuapp.com/csv/123@mail.com",
+    d3.csv(`https://backend-embedded-system.herokuapp.com/csv/${email}`,
       
     function(d){
       return { date : d3.timeParse("%Y-%m-%d %H:%M:%S")(d.date), value : d.spo2 }

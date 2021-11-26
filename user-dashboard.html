@@ -130,6 +130,7 @@
                 </nav>
                 <div class="container-fluid">
                     <h3 class="text-dark mb-4">User Dashboard</h3>
+                    <h3 id="user-dashboard" class="text-dark mb-4"></h3>
                     <div class="row mb-3">
                         <div class="col">
                             <div class="row mb-3 d-none">
@@ -257,57 +258,7 @@
                                                             <th>Avg Pulse Rate (BPM)</th>
                                                         </tr>
                                                     </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>2021-04-25 17:03:25<br></td>
-                                                            <td class="oxistatus">93</td>
-                                                            <td class="hrstatus">78</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>2021-10-09&nbsp;17:03:25<br></td>
-                                                            <td class="oxistatus">94</td>
-                                                            <td class="hrstatus">74</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>2021-01-12&nbsp;17:03:25<br></td>
-                                                            <td class="oxistatus">91</td>
-                                                            <td class="hrstatus">70</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>2021-10-13 17:03:25<br></td>
-                                                            <td class="oxistatus">96</td>
-                                                            <td class="hrstatus">78</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>2021-06-07 17:03:25<br></td>
-                                                            <td class="oxistatus">98</td>
-                                                            <td class="hrstatus">80</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>2021-12-02 17:03:25<br></td>
-                                                            <td class="oxistatus">97</td>
-                                                            <td class="hrstatus">76</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>2021-05-03 17:03:25<br></td>
-                                                            <td class="oxistatus">96</td>
-                                                            <td class="hrstatus">78</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>2021-12-12 17:03:25<br></td>
-                                                            <td class="oxistatus">90</td>
-                                                            <td class="hrstatus">70</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>2021-12-06 17:03:25<br></td>
-                                                            <td class="oxistatus">97</td>
-                                                            <td class="hrstatus">78</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>2021-03-29 17:03:25<br></td>
-                                                            <td class="oxistatus">89</td>
-                                                            <td class="hrstatus">73</td>
-                                                        </tr>
+                                                    <tbody id="table-body">
                                                     </tbody>
                                                     <tfoot>
                                                         <tr>
@@ -384,6 +335,26 @@
     <script src="assets/js/bs-init.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
     <script src="assets/js/theme.js"></script>
+    <script>
+        const search = new URLSearchParams(window.location.search);
+        const email_param = search.get('email')
+
+        $.get("https://backend-embedded-system.herokuapp.com/data/"+email_param, function(data, status){
+            for (let i = 0; i < data.data.sensorData.length; i++) {
+                const date = $("<td></td>").text(new Date(data.data.sensorData[data.data.sensorData.length - 1].date).toLocaleString())
+                const spo2 = $("<td></td>").text(data.data.sensorData[i].spo2);
+                const bpm = $("<td></td>").text(data.data.sensorData[i].bpm);
+                const record = $("<tr></tr>").append(date, spo2, bpm)
+                $("#table-body").append(record)
+                
+                // $("#reading-time").innerText = data.data.sensorData[i].date;
+                // $("#spo2").innerText = data.data.sensorData[i].spo2;
+                // $("#bpm").innerText = data.data.sensorData[i].bpm;
+            }
+
+            $("#user-dashboard").text(data.data.name);
+        })
+    </script>
 </body>
 
 </html>
