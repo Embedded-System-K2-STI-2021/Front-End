@@ -314,7 +314,7 @@
                     'Accept' : 'application/json',
                     'Content-type' : 'application/json',
                 },
-                body = data,
+                body : data,
             }).then(function(response){
                 if(response.status==200)
                 {
@@ -337,12 +337,13 @@
         const search = new URLSearchParams(window.location.search);
         const email_param = search.get('email')
 
-        $.get("https://backend-embedded-system.herokuapp.com/data/"+email_param, function(data, status){
+        $.get("https://reksti-k2-t3.herokuapp.com/data/"+email_param, function(data, status){
             for (let i = 0; i < data.data.sensorData.length; i++) {
                 const date = $("<td></td>").text(new Date(data.data.sensorData[data.data.sensorData.length - 1].date).toLocaleString())
-                const spo2 = $("<td></td>").text(data.data.sensorData[i].spo2);
-                const bpm = $("<td></td>").text(data.data.sensorData[i].bpm);
-                const record = $("<tr></tr>").append(date, spo2, bpm)
+                const ppmvalue = data.data.sensorData[data.data.sensorData.length-1].ppm;
+                const status = $("<td></td>").text(ppmvalue>1000 ? "Bahaya" : "Aman");
+                const ppm = $("<td></td>").text(data.data.sensorData[i].ppm);
+                const record = $("<tr></tr>").append(date, status, ppm)
                 $("#table-body").append(record)
                 
                 // $("#reading-time").innerText = data.data.sensorData[i].date;

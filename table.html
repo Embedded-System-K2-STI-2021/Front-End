@@ -162,15 +162,15 @@
                                         <tr>
                                             
                                             <td>
-                                                <a href="user-dashboard.html?email=0001">
+                                                <a href="user-dashboard.html?email=rahmat.wibowo21@gmail.com">
                                                 0001
                                                 </a>
                                             </td>
                                             
                                             <td>Dapur 1</td>
                                             <td id="reading-time"><br></td>
-                                            <td id="spo2" class="oxistatus"></td>
-                                            <td id="bpm" class="hrstatus"></td>
+                                            <td id="status" class="status"></td>
+                                            <td id="ppm" class="gaslevel"></td>
                                         </tr>
                                     </tbody>
                                     <tfoot>
@@ -220,8 +220,15 @@
     <script>
         $.get("https://reksti-k2-t3.herokuapp.com/data/rahmat.wibowo21@gmail.com", function(data, status){
             $("#reading-time").text(new Date(data.data.sensorData[data.data.sensorData.length - 1].date).toLocaleString());
-            $("#spo2").text(data.data.sensorData[data.data.sensorData.length - 1].spo2);
-            $("#bpm").text(data.data.sensorData[data.data.sensorData.length - 1].bpm);
+            const ppm = data.data.sensorData[data.data.sensorData.length-1].ppm;
+            
+            if (ppm > 1000) {
+                $("#status").text("Bahaya");
+            }
+            else $("#status").text("Aman");
+
+            // $("#status").text(data.data.sensorData[data.data.sensorData.length - 1].status);
+            $("#ppm").text(ppm);
         }
 )
     </script>
