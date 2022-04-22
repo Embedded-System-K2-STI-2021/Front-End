@@ -337,7 +337,7 @@
         const search = new URLSearchParams(window.location.search);
         const email_param = search.get('email')
 
-        $.get("https://reksti-k2-t3.herokuapp.com/data/"+email_param, function(data, status){
+        $.get("https://reksti-k2-t3.herokuapp.com/data/rahmat.wibowo21@gmail.com", function(data, status){
             for (let i = 0; i < data.data.sensorData.length; i++) {
                 const date = $("<td></td>").text(new Date(data.data.sensorData[data.data.sensorData.length - 1].date).toLocaleString())
                 const ppmvalue = data.data.sensorData[data.data.sensorData.length-1].ppm;
